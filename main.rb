@@ -40,12 +40,17 @@ class PrivateBacklogger
 
   # 課題をクローズ
   def close(issue_id)
-    params = {
-      statusId:     @@COMPOLETE_STATUS,
-      resolutionId: @@RESOLUTION_ID,
-    }
-    @backlog.update_issue("DEV-#{issue_id}", params)
-    self.list
+    summary = self.summary(issue_id)
+    print "#{summary} をクローズします y/n "
+    answer = gets.chomp
+    if answer === 'y'
+      params = {
+        statusId:     @@COMPOLETE_STATUS,
+        resolutionId: @@RESOLUTION_ID,
+      }
+      @backlog.update_issue("DEV-#{issue_id}", params)
+      self.list
+    end
   end
 
   # 開発関係の課題を作成
