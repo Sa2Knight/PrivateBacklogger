@@ -84,7 +84,6 @@ class PrivateBacklogger
 end
 
 def help
-  puts "-l     課題を一覧"
   puts "-u id  課題のURLを表示"
   puts "-e id  課題をクローズ"
   puts "-sd summary 開発関係の課題を作成"
@@ -95,13 +94,17 @@ def help
 end
 
 backlog = PrivateBacklogger.new
-argv = ARGV.getopts('lu:se:d:w:o:h')
-argv['h'] and help
-argv['l'] and backlog.list              # 一覧表示
-argv['u'] and backlog.url(argv['u'])    # URL表示
-argv['e'] and backlog.close(argv['e'])  # 課題クローズ
-if argv['s']
+argv = ARGV.getopts('u:se:d:w:o:h')
+if argv['h']
+  help
+elsif argv['u']
+  backlog.url(argv['u'])
+elsif argv['e']
+  backlog.close(argv['e'])
+elsif argv['s']
   argv['d'] and backlog.create_develop_issue(argv['d']) # 開発関係の課題作成
   argv['w'] and backlog.create_work_issue(argv['w'])    # 仕事関係の課題作成
   argv['o'] and backlog.create_other_issue(argv['o'])   # その他の課題作成
+else
+  backlog.list
 end
