@@ -28,6 +28,11 @@ class PrivateBacklogger
     end
   end
 
+  # 課題名を取得
+  def summary(issue_id)
+    @backlog.get_issue("DEV-#{issue_id}").body.summary
+  end
+
   # URLを表示
   def url(issue_id)
     puts "saknight.backlog.jp/view/DEV-#{issue_id}"
