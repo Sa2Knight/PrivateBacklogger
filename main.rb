@@ -21,7 +21,7 @@ class PrivateBacklogger
 
   # 未完了の課題を一覧
   def list
-    params = {projectId: [@@PROJECT_ID], statusId: @@UNCOMPLETE_STATUS}
+    params = {projectId: [@@PROJECT_ID], statusId: @@UNCOMPLETE_STATUS, sort: 'summary'}
     issues = @backlog.get_issues(params).body
     issues.each do |i|
       puts "#{i.issueKey.delete('DEV-')}: #{i.summary}"
